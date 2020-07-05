@@ -40,14 +40,8 @@ public class LoginPOM {
 		this.loginButton.click(); 
 	}
 	
-	public void validateWelcomeMesssage(String firstName, String lastName) {
-		if(driver.getTitle().equals("My Organization - My education - My courses")){
-			String expectedReslt = "Hello "+firstName+" "+ lastName +" and welcome,";
+	public String actualResult() {
 			String actualResult = this.welcomeMessage.getText();
-			Assert.assertEquals(actualResult, expectedReslt);
-		}
-		else {
-			System.out.println("Invalid credentials");
-		}
+			return actualResult;
 	}
 }

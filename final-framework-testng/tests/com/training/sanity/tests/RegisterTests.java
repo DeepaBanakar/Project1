@@ -4,8 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -44,46 +44,90 @@ public class RegisterTests {
 	@AfterMethod
 	public void tearDown() throws Exception {
 		Thread.sleep(1000);
-		driver.quit();
+		//driver.quit();
 	}
-	@Test
+	@Test(enabled = false)
 	public void validRegisterTest() {
 		String firstName = "Deepa", lastName="Banakar";
 		registerPOM.clickSignUp();
 		registerPOM.sendFirstName(firstName);
 		registerPOM.sendLastName(lastName);
 		registerPOM.sendEmail("deepa@123.com");
-		registerPOM.sendUserName("deepa25");
+		registerPOM.sendUserName("deepa26");
 		registerPOM.sendPassWord("abc12345");
 		registerPOM.sendConfirmPassword("abc12345");
 		registerPOM.sendPhoneNumber("0000000000");
 		registerPOM.selectLanguage("Galego");
 		registerPOM.selectLanguage("English");
-		registerPOM.selectStudentProfile();
+		registerPOM.selectProfile("Student");
 		screenShot.captureScreenShot("Before Registarion");
 		registerPOM.clickRegisterButton(); 
-		registerPOM.validateRegisterMessage(firstName,lastName);
+		if(driver.getPageSource().contains("Your personal settings have been registered.")) {
+			String expectedMessage = "Dear "+firstName+" "+lastName+",\n\n"
+					+ "Your personal settings have been registered.\n"
+					+ "An e-mail has been sent to remind you of your login and password.\n"
+					+ "You can now select, in the list, the course you want access to.";	
+			Assert.assertEquals(registerPOM.actualResult(),expectedMessage);
+		} else {
+			System.out.println(registerPOM.getFailureMessage()+"s are missing, Registration failed.");
+		}
 		screenShot.captureScreenShot("After Success_Registration");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void invalidRegisterTest() {
 		String firstName = "Deepa", lastName="Banakar";
 		registerPOM.clickSignUp();
 		registerPOM.sendFirstName(firstName);
 		registerPOM.sendLastName(lastName);
 		registerPOM.sendEmail("deepa@123.com");
-		registerPOM.sendUserName("deepa25");
+		registerPOM.sendUserName("deepa26");
 		//registerPOM.sendPassWord("abc12345");
 		registerPOM.sendConfirmPassword("abc12345");
 		registerPOM.sendPhoneNumber("0000000000");
 		registerPOM.selectLanguage("Galego");
 		registerPOM.selectLanguage("English");
-		registerPOM.selectStudentProfile();
+		registerPOM.selectProfile("student");
 		screenShot.captureScreenShot("Before Registarion");
 		registerPOM.clickRegisterButton(); 
-		registerPOM.validateRegisterMessage(firstName,lastName);
+		if(driver.getPageSource().contains("Your personal settings have been registered.")) {
+			String expectedMessage = "Dear "+firstName+" "+lastName+",\n\n"
+					+ "Your personal settings have been registered.\n"
+					+ "An e-mail has been sent to remind you of your login and password.\n"
+					+ "You can now select, in the list, the course you want access to.";	
+			Assert.assertEquals(registerPOM.actualResult(),expectedMessage);
+		} else {
+			System.out.println(registerPOM.getFailureMessage()+"s are missing, Registration failed.");
+		}
 		screenShot.captureScreenShot("After Failed_Registration");
+	}
+	
+	@Test
+	public void validRegisterTestTeacher() {
+		String firstName = "Deepa", lastName="Banakar";
+		registerPOM.clickSignUp();
+		registerPOM.sendFirstName(firstName);
+		registerPOM.sendLastName(lastName);
+		registerPOM.sendEmail("deepa@123.com");
+		registerPOM.sendUserName("deepa103");
+		registerPOM.sendPassWord("abc12345");
+		registerPOM.sendConfirmPassword("abc12345");
+		registerPOM.sendPhoneNumber("0000000000");
+		registerPOM.selectLanguage("Galego");
+		registerPOM.selectLanguage("English");
+		registerPOM.selectProfile("Teacher");
+		screenShot.captureScreenShot("Before Registration");
+		registerPOM.clickRegisterButton(); 
+		if(driver.getPageSource().contains("Your personal settings have been registered.")) {
+			String expectedMessage = "Dear "+firstName+" "+lastName+",\n\n"
+					+ "Your personal settings have been registered.\n"
+					+ "An e-mail has been sent to remind you of your login and password.\n" + 
+					"  Next";	
+			Assert.assertEquals(registerPOM.actualResult(),expectedMessage);
+		} else {
+			System.out.println(registerPOM.getFailureMessage()+"s are missing, Registration failed.");
+		}
+		screenShot.captureScreenShot("After Success_Registration");
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -50,31 +51,41 @@ public class EditProfileTests {
 	}
 	@Test
 	public void validEditProfileTest() {
-		
-		loginPOM.sendUserName("deepa25");
-		loginPOM.sendPassword("abc12345");
+		loginPOM.sendUserName("deepa24"); 
+		loginPOM.sendPassword("abc1234");
 		loginPOM.clickLoginBtn();
 		editProfilePOM.clickEditProfileLink();
-		editProfilePOM.sendCurrentpassword("abc12345");
-		editProfilePOM.sendNewPassword("abc1234");
-		editProfilePOM.sendConfirmPassword("abc1234");
+		editProfilePOM.sendCurrentpassword("abc1234");
+		editProfilePOM.sendNewPassword("abc12345");
+		editProfilePOM.sendConfirmPassword("abc12345");
 		editProfilePOM.clickSaveSettingsButton();
-		editProfilePOM.validateSaveSuccessMesssage();
+		String expectedReslt = "Your new profile has been saved";
+		String actualResult = editProfilePOM.actualResult();
+		if(expectedReslt.equals(actualResult)) {
+			Assert.assertEquals(actualResult, expectedReslt);
+		} else {
+			System.out.println("Edit Profile failed");
+		}
 		screenShot.captureScreenShot("AfterEditProfile");
 	}
 	
 	@Test
 	public void invalidEditProfileTest() {
-		
-		loginPOM.sendUserName("deepa25");
-		loginPOM.sendPassword("abc12345");
+		loginPOM.sendUserName("deepa24"); 
+		loginPOM.sendPassword("abc1234");
 		loginPOM.clickLoginBtn();
 		editProfilePOM.clickEditProfileLink();
-		editProfilePOM.sendCurrentpassword("abc12345555");
+		editProfilePOM.sendCurrentpassword("abc1234");
 		editProfilePOM.sendNewPassword("abc1234");
-		editProfilePOM.sendConfirmPassword("abc1234");
+		editProfilePOM.sendConfirmPassword("abc123");
 		editProfilePOM.clickSaveSettingsButton();
-		editProfilePOM.validateSaveSuccessMesssage();
-		screenShot.captureScreenShot("AfterEditProfile");
+		String expectedReslt = "Your new profile has been saved";
+		String actualResult = editProfilePOM.actualResult();
+		if(expectedReslt.equals(actualResult)) {
+			Assert.assertEquals(actualResult, expectedReslt);
+		} else {
+			System.out.println("Edit Profile failed");
+		}
+		screenShot.captureScreenShot("AfterFailedEditProfile");
 	}
 }

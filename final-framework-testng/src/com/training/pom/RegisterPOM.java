@@ -48,12 +48,15 @@ private WebDriver driver;
 	
 	@FindBy(xpath="//p[contains(text(),'Follow courses')]")
 	private WebElement studentRadioButton; 
+	
+	@FindBy(xpath="//p[contains(text(),'Teach courses')]")
+	private WebElement teacherRadioButton;
 
 	@FindBy(id="registration_submit")
 	private WebElement resgitser; 
 	
 	@FindBy(xpath="//section[@id='cm-content']//div[@class='row']")
-	private WebElement resgitserMessage;
+	private WebElement resgisterMessage;
 	
 	@FindBy(xpath="//div[@class='alert alert-warning']")
 	private WebElement failureMessage;
@@ -95,23 +98,22 @@ private WebDriver driver;
 		this.languageText.sendKeys(language);
 		this.languageText.sendKeys(Keys.ENTER);		
 	}
-	public void selectStudentProfile() {
-		this.studentRadioButton.click(); 
+	public void selectProfile(String profile) {
+		if(profile.equalsIgnoreCase("student")) {
+			this.studentRadioButton.click();
+		} else if(profile.equalsIgnoreCase("teacher")) {
+			this.teacherRadioButton.click();
+		}
+		 
 	}
 	public void clickRegisterButton() {
 		this.resgitser.click(); 
 	}
-	public void validateRegisterMessage(String firstName, String lastName) {	
-		if(driver.getPageSource().contains("Your personal settings have been registered.")) {
-			String expectedMassage = "Dear "+firstName+" "+lastName+",\n\n"
-					+ "Your personal settings have been registered.\n"
-					+ "An e-mail has been sent to remind you of your login and password.\n"
-					+ "You can now select, in the list, the course you want access to.";
-			String actualMassage = this.resgitserMessage.getText();	
-			Assert.assertEquals(actualMassage, expectedMassage);
-		} else {
-			System.out.println(this.failureMessage.getText()+"s are missing, Registration failed.");
-		}
+	public String actualResult() {	
+		return resgisterMessage.getText();
+	}
+	public String getFailureMessage() {	
+		return failureMessage.getText();
 	}
 
 }

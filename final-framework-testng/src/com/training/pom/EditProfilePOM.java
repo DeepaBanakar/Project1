@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 public class EditProfilePOM {
 	
@@ -57,14 +56,8 @@ private WebDriver driver;
 		this.saveSettingsButton.click(); 
 	}
 	
-	public void validateSaveSuccessMesssage() {
-		String expectedReslt = "Your new profile has been saved";
-		String actualResult = this.saveSuccessMessage.getText();
-		if(expectedReslt.equals(actualResult)) {
-			Assert.assertEquals(actualResult, expectedReslt);
-		} else {
-			System.out.println(actualResult);
-		}
+	public String actualResult() {
+		return saveSuccessMessage.getText();
 	}
 
 }
