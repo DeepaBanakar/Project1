@@ -66,6 +66,7 @@ private WebDriver driver;
 		this.editIcon.click();
 	}
 	public void sendWeight(String weight) {
+		this.weightTextbox.clear();
 		this.weightTextbox.sendKeys(weight);
 	}
 	public boolean verifyVisibleTextbox() {
