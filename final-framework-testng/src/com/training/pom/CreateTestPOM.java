@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 
 public class CreateTestPOM {
 	
-private WebDriver driver; 
+private WebDriver driver;
 	
 	public CreateTestPOM(WebDriver driver) {
 		this.driver = driver; 
