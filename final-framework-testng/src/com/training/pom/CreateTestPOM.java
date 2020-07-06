@@ -46,12 +46,12 @@ private WebDriver driver;
 	@FindBy(className = "ui-datepicker-year")
 	private WebElement yearPicker;
 	
-	@FindBy(css = ".ui_tpicker_hour_slider")
-			//xpath = "//div[@class='ui_tpicker_hour_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all']/span[@class='ui-slider-handle ui-state-default ui-corner-all']")
+	@FindBy(//css = ".ui_tpicker_hour_slider")
+			xpath = "//div[@class='ui_tpicker_hour_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all']/span[@class='ui-slider-handle ui-state-default ui-corner-all']")
 	private WebElement hourSlider;
 	
-	@FindBy(css = ".ui_tpicker_minute_slider")
-			//xpath = "//div[@class='ui_tpicker_minute_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all']/span[@class='ui-slider-handle ui-state-default ui-corner-all']")
+	@FindBy(//css = ".ui_tpicker_minute_slider")
+			xpath = "//div[@class='ui_tpicker_minute_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all']/span[@class='ui-slider-handle ui-state-default ui-corner-all']")
 	private WebElement minuteSlider;
 	
 	@FindBy (xpath = "//button[contains(text(),'Done')]")
@@ -132,15 +132,21 @@ private WebDriver driver;
 		//Select Date
 		driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//tbody/tr/td/a[contains(text(),'"+date1+"')]")).click();
 		//Set Time
-		/*
-		 * Actions moveSlider = new Actions(driver); Action action =
-		 * moveSlider.dragAndDropBy(this.hourSlider, -100, 0).build(); action.perform();
+		/* Using Java script 
+		 * JavascriptExecutor js = (JavascriptExecutor) driver;
+		 * js.executeScript("arguments[0].setAttribute('style', 'left: 30%;')",this.hourSlider);
+		 * js.executeScript("arguments[0].setAttribute('style', 'left: 30%;')",this.minuteSlider);
+		 */
+		
+		 /* Using Actions
+		  * Actions moveSlider = new Actions(driver); 
+		  * Action action = moveSlider.dragAndDropBy(this.hourSlider, -100, 0).build(); action.perform();
 		 * int x = (int) ((Double.parseDouble(hour)/12)*100) - 100;
-		 * System.out.println(x); int y = (int)((Double.parseDouble(minute)/60)*100);
-		 * System.out.println(y); action = moveSlider.dragAndDropBy(this.hourSlider, 75,
-		 * 0).build(); action.perform(); action =
-		 * moveSlider.dragAndDropBy(this.minuteSlider, 20, 0).build(); action.perform();
-		 * Thread.sleep(3000);
+		 * System.out.println(x); 
+		 * int y = (int)((Double.parseDouble(minute)/60)*100);
+		 * System.out.println(y); 
+		 * action = moveSlider.dragAndDropBy(this.hourSlider, x, 0).build(); action.perform(); 
+		 * action = moveSlider.dragAndDropBy(this.minuteSlider, y, 0).build(); action.perform();
 		 */
 		this.doneButton.click();
 	}
