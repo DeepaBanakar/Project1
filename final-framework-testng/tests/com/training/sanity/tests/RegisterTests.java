@@ -46,7 +46,7 @@ public class RegisterTests {
 		Thread.sleep(1000);
 		//driver.quit();
 	}
-	@Test(enabled = false)
+	@Test()
 	public void validRegisterTest() {
 		String firstName = "Deepa", lastName="Banakar";
 		registerPOM.clickSignUp();
